@@ -1,140 +1,167 @@
-import React, { useState } from "react";
-import { FaBars, FaSearch, FaSave, FaFilter, FaEdit, FaUserCircle, FaChartLine, FaFileAlt, FaHome } from "react-icons/fa";
+import React, { useState } from 'react';
 
-export default function Dashboard() {
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+const App = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <html>
-      <head>
-        <title>STE - Panel</title>
-        <style>
-          {`
-            body { margin: 0; font-family: sans-serif; }
-            .header { background: #1e2a3e; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
-            .btn-icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: white; }
-            .hidden-menu { display: none; background: #2d3e50; padding: 1rem; }
-            .hidden-menu.open { display: block; }
-            .card { border: 1px solid #ddd; margin: 1rem; padding: 1rem; border-radius: 8px; }
-            button { cursor: pointer; }
-            .low-contrast { color: #999999; background-color: #ffffff; padding: 0.5rem; margin: 0.5rem 0; }
-            .grid { display: flex; gap: 1rem; flex-wrap: wrap; }
-            .fake-link { color: #1e2a3e; text-decoration: underline; cursor: pointer; }
-            table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-            td, th { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-            .no-label-input { margin: 1rem 0; width: 100%; padding: 0.5rem; }
-          `}
-        </style>
-      </head>
-      <body>
-        <div className="header">
-          <div className="fake-link" onClick={() => alert("Navegando a inicio")}>
-            <FaHome /> STE Tutorias
+    <div style={{ fontFamily: 'Arial, sans-serif' }}>
+      <div style={{ backgroundColor: '#1a1a2e', color: 'white', padding: '1rem' }}>
+        <div onClick={() => setIsOpen(!isOpen)} style={{ fontSize: '1.5rem', cursor: 'pointer', display: 'inline-block' }}>
+          ☰
+        </div>
+        <div style={{ float: 'right', display: 'flex', gap: '1rem' }}>
+          <div onClick={() => console.log('notifications')} style={{ cursor: 'pointer', position: 'relative' }}>
+            🔔
+            <span style={{ backgroundColor: 'red', borderRadius: '50%', padding: '0.1rem 0.4rem', fontSize: '0.7rem', position: 'absolute', top: '-8px', right: '-12px' }}>3</span>
           </div>
-          <div>
-            <button className="btn-icon" onClick={() => setMenuOpen(!menuOpen)}>
-              <FaBars />
-            </button>
-            <button className="btn-icon" onClick={() => setSearchOpen(!searchOpen)}>
-              <FaSearch />
-            </button>
-            <FaUserCircle size={32} color="white" />
-            <a href="/perfil">
-              <FaUserCircle size={32} color="white" />
-            </a>
+          <img src="https://randomuser.me/api/portraits/lego/1.jpg" style={{ width: '35px', height: '35px', borderRadius: '50%', cursor: 'pointer' }} />
+        </div>
+      </div>
+
+      {isOpen && (
+        <div style={{ backgroundColor: '#16213e', color: 'white', padding: '1rem', position: 'absolute', width: '200px', zIndex: 1000 }}>
+          <div style={{ padding: '0.5rem', cursor: 'pointer', borderBottom: '1px solid #0f3460' }}>Dashboard</div>
+          <div style={{ padding: '0.5rem', cursor: 'pointer', borderBottom: '1px solid #0f3460' }}>Estadísticas</div>
+          <div style={{ padding: '0.5rem', cursor: 'pointer', borderBottom: '1px solid #0f3460' }}>Configuración</div>
+          <div style={{ padding: '0.5rem', cursor: 'pointer' }}>Cerrar Sesión</div>
+        </div>
+      )}
+
+      <div style={{ padding: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+          <div style={{ backgroundColor: '#ff6b6b', padding: '1.5rem', borderRadius: '10px', color: '#fff', cursor: 'pointer' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>12,345</div>
+            <div>Usuarios Totales</div>
+            <div style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>↑ 15%</div>
+          </div>
+          <div style={{ backgroundColor: '#4ecdc4', padding: '1.5rem', borderRadius: '10px', color: '#fff', cursor: 'pointer' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>$87,234</div>
+            <div>Ingresos</div>
+            <div style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>↑ 8%</div>
+          </div>
+          <div style={{ backgroundColor: '#ffe66d', padding: '1.5rem', borderRadius: '10px', color: '#333', cursor: 'pointer' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>3,456</div>
+            <div>Órdenes</div>
+            <div style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>↓ 2%</div>
+          </div>
+          <div style={{ backgroundColor: '#ff6b6b', padding: '1.5rem', borderRadius: '10px', color: '#fff', cursor: 'pointer' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>89.2%</div>
+            <div>Tasa Conversión</div>
+            <div style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>↑ 5%</div>
           </div>
         </div>
 
-        <div className={`hidden-menu ${menuOpen ? "open" : ""}`}>
-          <div onClick={() => alert("Ir a Tutorias")}>Tutorias</div>
-          <div onClick={() => alert("Ir a Estadisticas")}>Estadisticas</div>
-          <div onClick={() => alert("Cerrar sesion")}>Salir</div>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ padding: '0.75rem', flex: 1, border: '1px solid #ddd', borderRadius: '5px' }}
+          />
+          <button
+            onClick={() => console.log('search:', searchTerm)}
+            style={{ backgroundColor: '#4ecdc4', border: 'none', padding: '0.75rem 2rem', borderRadius: '5px', color: '#fff', cursor: 'pointer' }}
+          >
+            Buscar
+          </button>
         </div>
 
-        {searchOpen && (
-          <div className="card">
-            <div>Buscar</div>
-            <input type="text" placeholder="Nombre o carnet" />
-            <button>
-              <FaSearch />
-            </button>
-          </div>
-        )}
-
-        <div className="card">
-          <h4>Registro rapido</h4>
-          <div className="low-contrast">
-            Complete el formulario para registrar una tutoria
-          </div>
-
-          <label>Estudiante</label>
-          <input type="text" />
-
-          <span>Curso</span>
-          <select>
-            <option selected disabled>Seleccione un curso</option>
-            <option>Matematicas</option>
-            <option>Fisica</option>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+          <select style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '5px', flex: 1 }}>
+            <option>Todas las categorías</option>
+            <option>Electrónicos</option>
+            <option>Ropa</option>
+            <option>Hogar</option>
           </select>
+          <select style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '5px', flex: 1 }}>
+            <option>Ordenar por fecha</option>
+            <option>Ordenar por nombre</option>
+            <option>Ordenar por precio</option>
+          </select>
+        </div>
 
-          <div>Fecha</div>
-          <input type="date" />
-
-          <div role="button" onClick={() => alert("Guardado")} style={{ background: "#007bff", color: "white", padding: "0.5rem", textAlign: "center" }}>
-            <FaSave /> Guardar
-          </div>
-
-          <div aria-hidden="true" role="alert" onClick={() => alert("Error simulado")}>
-            Mensaje importante del sistema
+        <div style={{ backgroundColor: '#f5f5f5', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem' }}>Ventas Mensuales</div>
+          <div style={{ height: '300px', backgroundColor: '#e0e0e0', borderRadius: '8px', position: 'relative' }}>
+            <div style={{ position: 'absolute', bottom: 0, left: '10%', width: '8%', height: '45%', backgroundColor: '#ff6b6b' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '22%', width: '8%', height: '65%', backgroundColor: '#4ecdc4' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '34%', width: '8%', height: '80%', backgroundColor: '#ffe66d' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '46%', width: '8%', height: '55%', backgroundColor: '#ff6b6b' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '58%', width: '8%', height: '70%', backgroundColor: '#4ecdc4' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '70%', width: '8%', height: '85%', backgroundColor: '#ffe66d' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, left: '82%', width: '8%', height: '60%', backgroundColor: '#ff6b6b' }}></div>
           </div>
         </div>
 
-        <div className="card">
-          <div className="grid">
-            <div>
-              <FaChartLine size={32} />
-              <div>Totales</div>
-            </div>
-            <div onClick={() => alert("Ver detalle")}>
-              <FaFileAlt size={32} />
-              <div>Ver informes</div>
-            </div>
-            <a href="/reportes">
-              <FaFileAlt size={32} />
-            </a>
-          </div>
-
-          <h4>Asistencia reciente</h4>
-          <div style={{ color: "#aaa", fontSize: "12px" }}>Datos actualizados al dia de hoy</div>
-
-          <div role="button" tabindex="1">
-            <FaFilter /> Filtrar por fecha
-          </div>
-
-          <table>
+        <div>
+          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem' }}>Últimas Órdenes</div>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr>
-                <th></th>
-                <th>Nombre</th>
-                <th></th>
+              <tr style={{ backgroundColor: '#f5f5f5' }}>
+                <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #ddd' }}>ID</th>
+                <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Cliente</th>
+                <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Producto</th>
+                <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Total</th>
+                <th style={{ padding: '1rem', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>Maria Gonzalez</td>
-                <td><button><FaEdit /></button></td>
+              <tr style={{ borderBottom: '1px solid #ddd', cursor: 'pointer' }} onClick={() => console.log('row clicked')}>
+                <td style={{ padding: '1rem' }}>#1001</td>
+                <td style={{ padding: '1rem' }}>Juan Pérez</td>
+                <td style={{ padding: '1rem' }}>Laptop Pro</td>
+                <td style={{ padding: '1rem' }}>$1,299</td>
+                <td style={{ padding: '1rem', color: '#4ecdc4', fontWeight: 'bold' }}>Completado</td>
               </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>Carlos Ramirez</td>
-                <td><button><FaEdit /></button></td>
+              <tr style={{ borderBottom: '1px solid #ddd', cursor: 'pointer' }} onClick={() => console.log('row clicked')}>
+                <td style={{ padding: '1rem' }}>#1002</td>
+                <td style={{ padding: '1rem' }}>María García</td>
+                <td style={{ padding: '1rem' }}>Teléfono X</td>
+                <td style={{ padding: '1rem' }}>$899</td>
+                <td style={{ padding: '1rem', color: '#ffe66d', fontWeight: 'bold' }}>Pendiente</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid #ddd', cursor: 'pointer' }} onClick={() => console.log('row clicked')}>
+                <td style={{ padding: '1rem' }}>#1003</td>
+                <td style={{ padding: '1rem' }}>Carlos López</td>
+                <td style={{ padding: '1rem' }}>Audífonos</td>
+                <td style={{ padding: '1rem' }}>$149</td>
+                <td style={{ padding: '1rem', color: '#ff6b6b', fontWeight: 'bold' }}>Cancelado</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid #ddd', cursor: 'pointer' }} onClick={() => console.log('row clicked')}>
+                <td style={{ padding: '1rem' }}>#1004</td>
+                <td style={{ padding: '1rem' }}>Ana Martínez</td>
+                <td style={{ padding: '1rem' }}>Monitor 4K</td>
+                <td style={{ padding: '1rem' }}>$549</td>
+                <td style={{ padding: '1rem', color: '#4ecdc4', fontWeight: 'bold' }}>Completado</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </body>
-    </html>
+
+        <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: '#1a1a2e', borderRadius: '8px', color: 'white' }}>
+          <form onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ marginBottom: '0.5rem' }}>Nombre Completo</div>
+              <input type="text" style={{ width: '100%', padding: '0.75rem', borderRadius: '5px', border: 'none' }} />
+            </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ marginBottom: '0.5rem' }}>Correo Electrónico</div>
+              <input type="email" style={{ width: '100%', padding: '0.75rem', borderRadius: '5px', border: 'none' }} />
+            </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ marginBottom: '0.5rem' }}>Mensaje</div>
+              <textarea rows={3} style={{ width: '100%', padding: '0.75rem', borderRadius: '5px', border: 'none' }}></textarea>
+            </div>
+            <button type="submit" style={{ backgroundColor: '#4ecdc4', border: 'none', padding: '0.75rem 2rem', borderRadius: '5px', color: '#fff', cursor: 'pointer', width: '100%' }}>
+              Enviar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default App;
